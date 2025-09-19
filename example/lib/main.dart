@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:nex_common_api/api_core/api_methods.dart';
 
@@ -34,14 +33,21 @@ class _MyHomePageState extends State<MyHomePage> {
     try {
       var response = await apiMethods.getMethod(
         url: 'https://jsonplaceholder.typicode.com/posts/1',
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+        },
       );
 
       setState(() {
-        _displayText = jsonEncode(response);
+        print("Here is post Get: ${response.$2}");
+        print("Here is post type: ${response.$2.runtimeType}");
+        _displayText = response.toString();
       });
     } catch (e) {
       setState(() {
         _displayText = 'Error: $e';
+        print("Here is post data: ${e}");
       });
     }
   }
@@ -54,7 +60,8 @@ class _MyHomePageState extends State<MyHomePage> {
       );
 
       setState(() {
-        _displayText = jsonEncode(response);
+        print("Here is post data: ${response}");
+        _displayText = response.toString();
       });
     } catch (e) {
       setState(() {
